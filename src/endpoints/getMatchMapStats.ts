@@ -425,6 +425,10 @@ export function getPlayerStats(m$: HLTVPage, p$: HLTVPage | null) {
     const id = el.find('.st-player a').attrThen('href', getIdAt(3))!
     const performanceStats = playerPerformanceStats?.[id]
     const rating = el.find('.st-rating').numFromText()
+    const firstKillsDeathsString = el.find('.st-fkdiff').attr('title')
+    const [firstKills, firstDeaths] = (
+      firstKillsDeathsString.match(/[0-9]+/g) ?? []
+    ).map(Number)
 
     return {
       player: {
@@ -446,6 +450,8 @@ export function getPlayerStats(m$: HLTVPage, p$: HLTVPage | null) {
       killDeathsDifference: el.find('.st-kddiff').numFromText(),
       ADR: el.find('.st-adr').numFromText(),
       firstKillsDifference: el.find('.st-fkdiff').numFromText(),
+      firstKills,
+      firstDeaths,
       ...(el.find('.st-rating .ratingDesc').text() === '2.0'
         ? { rating2: rating }
         : { rating1: rating }),

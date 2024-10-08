@@ -37,14 +37,20 @@ const log = (promise: Promise<any>) =>
 //     csVersion: 'CS2'
 //   })
 // )
-for (let i = 0; i < 100; i++) {
-  log(
-    HLTV.getDetailedTeamMapStats({
-      id: 6667,
-      maps: GameMap.Anubis,
-      startDate: '2023-10-28',
-      endDate: '2024-01-28',
-      csVersion: 'CS2'
-    })
-  )
+// for (let i = 0; i < 100; i++) {
+//   log(
+//     HLTV.getDetailedTeamMapStats({
+//       id: 6667,
+//       maps: GameMap.Anubis,
+//       startDate: '2023-10-28',
+//       endDate: '2024-01-28',
+//       csVersion: 'CS2'
+//     })
+//   )
+// }
+
+async function test() {
+  const data = await HLTV.getMatchMapStats({ id: 185989 })
+  console.log(data.playerStats.team1)
 }
+test()
