@@ -72,25 +72,15 @@ export const defaultLoadMatchStatsPage = async (url: string) => {
     const RATE_LIMITED = 'You are being rate limited'
     const JS_AND_COOKIE = 'Enable JavaScript and cookies to continue'
     let response
-    let tryCount = 0
     response = await page.goto(url, {
-      timeout: 30000,
+      timeout: 5000,
       waitUntil: 'domcontentloaded'
     })
     responseBody = await response?.text()
-    // responseData = await response?.buffer()
     if (
       responseBody?.includes(CHALLENGE_MATCH || 'challenge-platform') ||
       responseBody?.includes(RATE_LIMITED) ||
       responseBody?.includes(JS_AND_COOKIE)
-    ) {
-      await sleep(5000)
-    }
-    while (
-      (responseBody?.includes(CHALLENGE_MATCH || 'challenge-platform') ||
-        responseBody?.includes(RATE_LIMITED) ||
-        responseBody?.includes(JS_AND_COOKIE)) &&
-      tryCount <= 3
     ) {
       const newResponse = await page.waitForNavigation({
         timeout: 10000,
@@ -99,7 +89,6 @@ export const defaultLoadMatchStatsPage = async (url: string) => {
       if (newResponse) response = newResponse
       responseBody = await response?.text()
       // responseData = await response?.buffer()
-      tryCount++
     }
     responseHeaders = response?.headers()
     // const cookies = await page.cookies()

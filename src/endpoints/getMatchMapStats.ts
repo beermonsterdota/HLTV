@@ -23,6 +23,8 @@ export interface PlayerStatsNoPerformance {
   killDeathsDifference: number
   ADR?: number
   firstKillsDifference: number
+  firstKills: number
+  firstDeaths: number
   rating1?: number
   rating2?: number
 }
@@ -41,6 +43,8 @@ export interface PlayerStatsFull {
   killDeathsDifference: number
   ADR?: number
   firstKillsDifference: number
+  firstKills: number
+  firstDeaths: number
   rating1?: number
   rating2?: number
 }
@@ -183,8 +187,8 @@ export const getMatchMapStats =
       team2TotalRounds: m$('.team-right .bold').numFromText()!,
       halfResults: halfsString
         .match(/(?!\() \d+ : \d+ (?=\))/g)!
-        .map((x) => x.trim().split(' : '))
-        .map(([t1, t2]) => ({
+        ?.map((x) => x.trim().split(' : '))
+        ?.map(([t1, t2]) => ({
           team1Rounds: Number(t1),
           team2Rounds: Number(t2)
         }))
@@ -210,8 +214,8 @@ export const getMatchMapStats =
         m$('.match-info-box .text-ellipsis')
           .first()
           .attr('href')
-          .split('event=')
-          .pop()
+          ?.split('event=')
+          ?.pop()
       ),
       name: m$('.match-info-box .text-ellipsis').first().text()
     }
