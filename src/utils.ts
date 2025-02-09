@@ -5,7 +5,8 @@ export const fetchPage = async (
   url: string,
   loadPage: (url: string) => Promise<string>
 ): Promise<cheerio.Root> => {
-  const root = cheerio.load(await loadPage(url))
+  const page = await loadPage(url)
+  const root = cheerio.load(page)
   const html = root.html()
 
   if (
@@ -14,7 +15,8 @@ export const fetchPage = async (
     html.includes('Checking your browser before accessing') ||
     html.includes('Enable JavaScript and cookies to continue') ||
     html.includes('Access denied') ||
-    html.includes('restrict access')
+    html.includes('restrict access') ||
+    !page
   ) {
     throw new Error(
       'Access denied | www.hltv.org used Cloudflare to restrict access'
