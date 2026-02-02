@@ -415,7 +415,7 @@ export function getPlayerStats(m$: HLTVPage, p$: HLTVPage | null) {
           deathsPerRound: Number(
             graphData.split('Deaths / round: ')[1].split('"')[0]
           ),
-          impact: Number(graphData.split('Impact rating: ')[1].split('"')[0])
+          impact: Number(graphData.split('Impact rating: ')[1]?.split('"')[0])
         }
 
         map[playerId] = data
@@ -431,7 +431,7 @@ export function getPlayerStats(m$: HLTVPage, p$: HLTVPage | null) {
     const rating = el.find('.st-rating').numFromText()
     const firstKillsDeathsString = el.find('.st-fkdiff').attr('title')
     const [firstKills, firstDeaths] = (
-      firstKillsDeathsString.match(/[0-9]+/g) ?? []
+      firstKillsDeathsString?.match(/[0-9]+/g) ?? []
     ).map(Number)
 
     return {
