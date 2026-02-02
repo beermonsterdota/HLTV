@@ -50,6 +50,8 @@ export interface FullPlayerStats {
     savedTeammatesPerRound?: number
     rating1?: number
     rating2?: number
+    hltvRating: number | undefined
+    ratingLabel: string
   }
   individualStatistics: {
     roundsWithKills: number
@@ -189,7 +191,6 @@ export const getPlayerStats =
       hltvRating,
       ratingLabel
     }
-    console.log('🚀 ~ getPlayerStats ~ overviewStatistics:', overviewStatistics)
 
     const getIndivialStats = (label: string): number => {
       const lbl = label.toLowerCase()
