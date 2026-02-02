@@ -139,7 +139,7 @@ export const getPlayerStats =
       name: $('.summaryRealname .flag').attr('title')!,
       code: $('.summaryRealname .flag').attrThen(
         'src',
-        (x) => x.split('/').pop()?.split('.')[0]!
+        (x) => x?.split('/').pop()?.split('.')[0]!
       )
     }
 
@@ -161,6 +161,14 @@ export const getPlayerStats =
       }
     }
 
+    const hltvRating = $('.player-summary-stat-box-rating-data-text')
+      .first()
+      .numFromText()
+    const ratingLabel = $('.player-summary-stat-box-data-description-text')
+      .first()
+      ?.text()
+      ?.split('\n')?.[0]
+
     const overviewStatistics = {
       kills: getOverviewStats('Total kills')!,
       headshots: getOverviewStats('Headshot %')!,
@@ -177,8 +185,11 @@ export const getPlayerStats =
       savedTeammatesPerRound: getOverviewStats('Saved teammates'),
       ...(getOverviewStats('Rating 1.0') !== undefined
         ? { rating1: getOverviewStats('Rating 1.0') }
-        : { rating2: getOverviewStats('Rating 2.0') })
+        : { rating2: getOverviewStats('Rating 2.0') }),
+      hltvRating,
+      ratingLabel
     }
+    console.log('🚀 ~ getPlayerStats ~ overviewStatistics:', overviewStatistics)
 
     const getIndivialStats = (label: string): number => {
       const lbl = label.toLowerCase()

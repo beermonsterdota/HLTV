@@ -18,7 +18,11 @@ const log = (promise: Promise<any>) =>
 // log(HLTV.getMatchesStats())
 // log(HLTV.getPlayer({ id: 7998 }))
 // log(HLTV.getPlayerRanking())
-// log(HLTV.getPlayerStats({ id: 1122 }))
+HLTV.getPlayerStats({
+  id: 18221,
+  startDate: '2025-11-02',
+  endDate: '2026-02-02'
+})
 // log(HLTV.getRecentThreads())
 // log(HLTV.getStreams())
 // log(HLTV.getTeam({ id: 7020 }))
@@ -49,28 +53,28 @@ const log = (promise: Promise<any>) =>
 //   )
 // }
 
-async function test() {
-  async function loader(url: string) {
-    const res = await fetch('http://localhost:8191/v1', {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-      body: JSON.stringify({
-        cmd: 'request.get',
-        url,
-        maxTimeout: 30000
-      })
-    })
-    if (!res.ok) {
-      throw new Error(await res.json())
-    }
-    const body = await res.json()
-    return body.solution.response
-  }
-  const betterHLTV = HLTV.createInstance({
-    loadPage: loader,
-    loadMatchStatsPage: loader
-  })
-  const data = await betterHLTV.getMatchMapStats({ id: 185989 })
-  console.log('🚀 ~ test ~ data:', data)
-}
-test()
+// async function test() {
+//   async function loader(url: string) {
+//     const res = await fetch('http://localhost:8191/v1', {
+//       headers: { 'Content-Type': 'application/json' },
+//       method: 'POST',
+//       body: JSON.stringify({
+//         cmd: 'request.get',
+//         url,
+//         maxTimeout: 30000
+//       })
+//     })
+//     if (!res.ok) {
+//       throw new Error(await res.json())
+//     }
+//     const body = await res.json()
+//     return body.solution.response
+//   }
+//   const betterHLTV = HLTV.createInstance({
+//     loadPage: loader,
+//     loadMatchStatsPage: loader
+//   })
+//   const data = await betterHLTV.getMatchMapStats({ id: 185989 })
+//   console.log('🚀 ~ test ~ data:', data)
+// }
+// test()
