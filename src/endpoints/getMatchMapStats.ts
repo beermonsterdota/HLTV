@@ -447,12 +447,12 @@ export function getPlayerStats(m$: HLTVPage, p$: HLTVPage | null) {
       flashAssists: Number(
         el.find('.st-assists .gtSmartphone-only').text().replace(/\(|\)/g, '')
       ),
-      deaths: el.find('.st-deaths').numFromText()!,
+      deaths: Number(el.find('.st-deaths').text().split(' ')[0])!,
       KAST: el
         .find('.st-kdratio')
         .textThen((x) => parseNumber(x.replace('%', ''))),
       killDeathsDifference: el.find('.st-kddiff').numFromText(),
-      ADR: el.find('.st-adr').numFromText(),
+      ADR: el.find('.st-adr').first().numFromText(),
       firstKillsDifference: el.find('.st-fkdiff').numFromText(),
       firstKills,
       firstDeaths,
